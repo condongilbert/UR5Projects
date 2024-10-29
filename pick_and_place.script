@@ -1,0 +1,37 @@
+# URScript for picking and placing an object
+
+# Define target positions
+def pick_position():
+    # Set the target position for picking (adjust values as necessary)
+    p[0.3, -0.2, 0.1]  # x, y, z coordinates in meters
+end
+
+def place_position():
+    # Set the target position for placing (adjust values as necessary)
+    p[0.5, 0.2, 0.1]  # x, y, z coordinates in meters
+end
+
+# Main program
+def main():
+    # Move to the pick position
+    movej(pick_position(), a=1.0, v=0.5)  # Move to pick position with acceleration and speed
+    set_tool(tool_0)  # Set the tool if you have a gripper or suction cup
+    
+    # Simulate gripping the object (open gripper, adjust based on your tool)
+    set_digital_out(0, True)  # Assuming digital output 0 controls the gripper
+    sleep(1)  # Wait for the grip to be established
+
+    # Move to the place position
+    movej(place_position(), a=1.0, v=0.5)  # Move to place position
+    
+    # Release the object
+    set_digital_out(0, False)  # Open the gripper
+    sleep(1)  # Wait for the release
+
+    # Return to home position or initial position
+    movej(p[0, 0, 0.5, 0, 0, 0], a=1.0, v=0.5)  # Home position
+
+end
+
+# Start the main program
+main()
